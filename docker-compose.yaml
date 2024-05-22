@@ -1,0 +1,24 @@
+name: rust-dev
+services:
+  mysql:
+    container_name: "rust-mysql"
+    image: mysql:8.3.0
+    command:
+      --authentication_policy=CACHING_SHA2_PASSWORD
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: password_2024
+      MYSQL_DATABASE: dev
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: password_2024
+    ports:
+      - '3306:3306'
+    restart: always
+volumes:
+  mysql-data:
